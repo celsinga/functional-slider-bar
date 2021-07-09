@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     position: 'absolute',
+    top: -10,
     zIndex: 999,
   },
   progressBarSectionContainer: {

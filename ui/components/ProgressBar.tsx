@@ -175,7 +175,8 @@ export const ProgressBar = ({points}: {points: number}) => {
         <View>
           <View style={styles.progressBarContainer}>
             <Animated.View
-              style={{transform: [{translateX: pan.x}]}}
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '16%'}]}>
                 <Image source={star} style={styles.star} />
