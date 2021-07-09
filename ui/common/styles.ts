@@ -26,10 +26,10 @@ export const imageValues = {
 };
 
 export const fonts = {
-  light: 'Muli-Light',
-  standard: 'Muli',
-  semiBold: 'Muli-SemiBold',
-  bold: 'Muli-Bold',
+  // // light: 'Muli-Light',
+  // standard: 'Muli',
+  // semiBold: 'Muli-SemiBold',
+  // bold: 'Muli-Bold',
 };
 
 export const buttonStyles = StyleSheet.create({
@@ -88,7 +88,7 @@ export const containerStyles = StyleSheet.create({
   },
   headerText: {
     color: colors.white,
-    fontFamily: fonts.bold,
+    // fontFamily: fonts.bold,
     fontSize: 30,
     textAlign: 'left',
     paddingTop: 50,
@@ -115,25 +115,25 @@ export const containerStyles = StyleSheet.create({
 export const standardText = {
   fontSize: 16,
   color: colors.mineShaft,
-  fontFamily: fonts.standard,
+  // fontFamily: fonts.standard,
 };
 
 export const textStyles = StyleSheet.create({
   headlineWhiteCenter: {
     color: colors.white,
-    fontFamily: 'Muli-Bold',
+    // fontFamily: 'Muli-Bold',
     fontSize: 34,
     textAlign: 'center',
   },
   paragraphWhiteCenter: {
     color: colors.white,
-    fontFamily: 'Muli-Bold',
+    // fontFamily: 'Muli-Bold',
     fontSize: 16,
     textAlign: 'center',
   },
   tagText: {
     fontSize: 14,
-    fontFamily: fonts.standard,
+    // fontFamily: fonts.standard,
   },
   purpleText: {
     paddingRight: 10,
@@ -151,7 +151,7 @@ export const textStyles = StyleSheet.create({
     color: colors.black,
   },
   boldPurpleText: {
-    fontFamily: fonts.bold,
+    // fontFamily: fonts.bold,
     fontSize: 16,
     color: colors.blueViolet,
   },

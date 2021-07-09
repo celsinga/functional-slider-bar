@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
-import { Image, Text, View, Animated, PanResponder } from 'react-native';
-import { colors, textStyles } from '../common/styles';
-import { styles } from './styles';
+import React, {useRef} from 'react';
+import {Image, Text, View, PanResponder, Animated} from 'react-native';
+import {textStyles} from '../common/styles';
+import {styles} from './styles';
 
-const star = require('../../../../assets/star.png');
+const star = require('../assets/star.png');
 
 // adjust these as needed.
 enum DiscountThreshhold {
@@ -68,8 +68,8 @@ const pointsForDiscount = (points: number) => {
   }
 };
 
-const EmptyProgressBarSection = ({ sectionStyle }: { sectionStyle?: any }) => (
-  <View style={[styles.emptyProgressBar, { ...sectionStyle }]} />
+const EmptyProgressBarSection = ({sectionStyle}: {sectionStyle?: any}) => (
+  <View style={[styles.emptyProgressBar, {...sectionStyle}]} />
 );
 
 const HalfSection = ({
@@ -80,29 +80,45 @@ const HalfSection = ({
   rightStyle?: any;
 }) => (
   <View style={styles.halfProgressBarContainer}>
-    <View style={[styles.filledHalfBar, { ...leftStyle }]} />
-    <View style={[styles.emptyHalfBar, { ...rightStyle }]} />
+    <View style={[styles.filledHalfBar, {...leftStyle}]} />
+    <View style={[styles.emptyHalfBar, {...rightStyle}]} />
   </View>
 );
 
-const FullSection = ({ sectionStyle }: { sectionStyle?: any }) => (
-  <View style={[styles.fullProgressBar, { ...sectionStyle }]} />
+const FullSection = ({sectionStyle}: {sectionStyle?: any}) => (
+  <View style={[styles.fullProgressBar, {...sectionStyle}]} />
 );
 
-const ActiveDiscountText = ({ text }: { text: string }) => (
+const ActiveDiscountText = ({text}: {text: string}) => (
   <Text style={textStyles.purpleText}>{text}</Text>
 );
-const InactiveDiscountText = ({ text }: { text: string }) => (
+const InactiveDiscountText = ({text}: {text: string}) => (
   <Text style={textStyles.inactiveGreyText}>{text}</Text>
 );
 
-export const ProgressBar = ({ points }: { points: number }) => {
+export const ProgressBar = ({points}: {points: number}) => {
+  const pan = useRef(new Animated.ValueXY()).current;
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        pan.setOffset({
+          x: (pan.x as any)._value,
+          y: (pan.y as any)._value,
+        });
+      },
+      onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
+      onPanResponderRelease: () => {
+        pan.flattenOffset();
+      },
+    }),
+  ).current;
   switch (pointsForDiscount(points)) {
     case PointsToDiscount.HALFWAY_TO_FIFTEEN_PERCENT:
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '-2%' }]}>
+            <View style={[styles.starContainer, {left: '-2%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -110,7 +126,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
               <EmptyProgressBarSection />
               <EmptyProgressBarSection />
               <EmptyProgressBarSection />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -125,7 +141,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '16%' }]}>
+            <View style={[styles.starContainer, {left: '16%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -143,7 +159,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
               />
               <EmptyProgressBarSection />
               <EmptyProgressBarSection />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -158,17 +174,23 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '16%' }]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}]}}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '16%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
+                // eslint-disable-next-line react-native/no-inline-styles
                 sectionStyle={{
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,
                 }}
               />
               <HalfSection
+                // eslint-disable-next-line react-native/no-inline-styles
                 leftStyle={{
                   borderTopLeftRadius: 0,
                   borderBottomLeftRadius: 0,
@@ -176,7 +198,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
               />
               <EmptyProgressBarSection />
               <EmptyProgressBarSection />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -191,7 +213,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '36%' }]}>
+            <View style={[styles.starContainer, {left: '36%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -209,7 +231,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
               />
               <EmptyProgressBarSection />
               <EmptyProgressBarSection />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -224,7 +246,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '36%' }]}>
+            <View style={[styles.starContainer, {left: '36%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -247,7 +269,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
                 }}
               />
               <EmptyProgressBarSection />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -262,7 +284,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '55%' }]}>
+            <View style={[styles.starContainer, {left: '55%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -287,7 +309,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
                 }}
               />
               <EmptyProgressBarSection />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -302,7 +324,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '55%' }]}>
+            <View style={[styles.starContainer, {left: '55%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -332,7 +354,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
                   borderBottomLeftRadius: 0,
                 }}
               />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -347,7 +369,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '75%' }]}>
+            <View style={[styles.starContainer, {left: '75%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -379,7 +401,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
                   borderBottomLeftRadius: 0,
                 }}
               />
-              <EmptyProgressBarSection sectionStyle={{ borderRightWidth: 0 }} />
+              <EmptyProgressBarSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -394,7 +416,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '75%' }]}>
+            <View style={[styles.starContainer, {left: '75%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
@@ -426,7 +448,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
                   borderBottomLeftRadius: 0,
                 }}
               />
-              <FullSection sectionStyle={{ borderRightWidth: 0 }} />
+              <FullSection sectionStyle={{borderRightWidth: 0}} />
             </View>
           </View>
           <View style={styles.discountTextContainer}>
@@ -442,7 +464,7 @@ export const ProgressBar = ({ points }: { points: number }) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, { left: '-2%' }]}>
+            <View style={[styles.starContainer, {left: '-2%'}]}>
               <Image source={star} style={styles.star} />
             </View>
             <View style={styles.progressBarSectionContainer}>
