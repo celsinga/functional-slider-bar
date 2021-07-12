@@ -14,7 +14,7 @@ const App = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
       <View style={backgroundStyle}>
-        <ProgressBar points={30} />
+        <ProgressBar points={15} />
       </View>
     </SafeAreaView>
   );

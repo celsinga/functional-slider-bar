@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useRef} from 'react';
 import {Image, Text, View, PanResponder, Animated} from 'react-native';
 import {textStyles} from '../common/styles';
@@ -118,9 +119,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '-2%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved!!! @ / 15%: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '-2%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <HalfSection />
               <EmptyProgressBarSection />
@@ -141,9 +147,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '16%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '16%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
                 sectionStyle={{
@@ -170,13 +181,14 @@ export const ProgressBar = ({points}: {points: number}) => {
           </View>
         </View>
       );
+    //*** FUNCTIONAL SLIDER ***
     case PointsToDiscount.HALFWAY_TO_TWENTY_PERCENT:
       return (
         <View>
           <View style={styles.progressBarContainer}>
             <Animated.View
-              // eslint-disable-next-line react-native/no-inline-styles
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '16%'}]}>
                 <Image source={star} style={styles.star} />
@@ -184,14 +196,12 @@ export const ProgressBar = ({points}: {points: number}) => {
             </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
-                // eslint-disable-next-line react-native/no-inline-styles
                 sectionStyle={{
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,
                 }}
               />
               <HalfSection
-                // eslint-disable-next-line react-native/no-inline-styles
                 leftStyle={{
                   borderTopLeftRadius: 0,
                   borderBottomLeftRadius: 0,
@@ -214,9 +224,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '36%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '36%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
                 sectionStyle={{
@@ -247,9 +262,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '36%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '36%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
                 sectionStyle={{
@@ -285,9 +305,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '55%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '55%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
                 sectionStyle={{
@@ -325,9 +350,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '55%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '55%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
                 sectionStyle={{
@@ -370,9 +400,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '75%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '75%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
                 sectionStyle={{
@@ -417,9 +452,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '75%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '75%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <FullSection
                 sectionStyle={{
@@ -465,9 +505,14 @@ export const ProgressBar = ({points}: {points: number}) => {
       return (
         <View>
           <View style={styles.progressBarContainer}>
-            <View style={[styles.starContainer, {left: '-2%'}]}>
-              <Image source={star} style={styles.star} />
-            </View>
+            <Animated.View
+              style={{transform: [{translateX: pan.x}], zIndex: 999}}
+              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              {...panResponder.panHandlers}>
+              <View style={[styles.starContainer, {left: '-2%'}]}>
+                <Image source={star} style={styles.star} />
+              </View>
+            </Animated.View>
             <View style={styles.progressBarSectionContainer}>
               <EmptyProgressBarSection />
               <EmptyProgressBarSection />
