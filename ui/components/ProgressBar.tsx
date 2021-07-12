@@ -27,7 +27,10 @@ enum PointsToDiscount {
   MAX,
 }
 
+let sliderPoints: number;
+
 const pointsForDiscount = (points: number) => {
+  sliderPoints = points;
   if (points <= 0) {
     return PointsToDiscount.NONE;
   }
@@ -97,6 +100,21 @@ const InactiveDiscountText = ({text}: {text: string}) => (
   <Text style={textStyles.inactiveGreyText}>{text}</Text>
 );
 
+const UpdateSlider = (xValue: string) => {
+  const num = parseInt(xValue, 10);
+  console.log('xValue: ', num, typeof num);
+  console.log(sliderPoints);
+  if (sliderPoints === 30) {
+    if (num > 70) {
+      console.log('@@@ SWITCH!');
+      return PointsToDiscount.TWENTY_PERCENT;
+    }
+    if (num < 0) {
+      console.log('@@@ negative value!');
+    }
+  }
+};
+
 export const ProgressBar = ({points}: {points: number}) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const panResponder = useRef(
@@ -121,7 +139,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved!!! @ / 15%: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '-2%'}]}>
                 <Image source={star} style={styles.star} />
@@ -149,7 +167,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '16%'}]}>
                 <Image source={star} style={styles.star} />
@@ -181,14 +199,13 @@ export const ProgressBar = ({points}: {points: number}) => {
           </View>
         </View>
       );
-    //*** FUNCTIONAL SLIDER ***
     case PointsToDiscount.HALFWAY_TO_TWENTY_PERCENT:
       return (
         <View>
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '16%'}]}>
                 <Image source={star} style={styles.star} />
@@ -226,7 +243,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '36%'}]}>
                 <Image source={star} style={styles.star} />
@@ -264,7 +281,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '36%'}]}>
                 <Image source={star} style={styles.star} />
@@ -307,7 +324,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '55%'}]}>
                 <Image source={star} style={styles.star} />
@@ -352,7 +369,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '55%'}]}>
                 <Image source={star} style={styles.star} />
@@ -402,7 +419,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '75%'}]}>
                 <Image source={star} style={styles.star} />
@@ -454,7 +471,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '75%'}]}>
                 <Image source={star} style={styles.star} />
@@ -507,7 +524,7 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => console.log('@@ moved: ', pan.x)}
+              onTouchMove={() => UpdateSlider(JSON.stringify(pan.x))}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '-2%'}]}>
                 <Image source={star} style={styles.star} />
