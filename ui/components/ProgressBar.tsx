@@ -3,7 +3,7 @@ import React, {useRef, useState} from 'react';
 import {Image, Text, View, PanResponder, Animated} from 'react-native';
 import {textStyles} from '../common/styles';
 import {styles} from './styles';
-import { useWindowDimensions } from 'react-native';
+// import {useWindowDimensions} from 'react-native';
 
 const star = require('../assets/star.png');
 
@@ -103,7 +103,7 @@ const InactiveDiscountText = ({text}: {text: string}) => (
 
 const UpdateSlider = (num: number) => {
   // console.log('xValue: ', num, typeof num);
-  console.log(num);
+  console.log('@@ slider xValue: ', num);
   if (sliderPoints === 30) {
     if (num >= 70) {
       // console.log('@@@ SWITCH!');
@@ -116,12 +116,13 @@ const UpdateSlider = (num: number) => {
 };
 
 export const ProgressBar = ({points}: {points: number}) => {
-  // const { width } = useWindowDimensions();
+  // const {screenWidth} = useWindowDimensions();
+  const [barWidth, setBarWidth] = useState<number | undefined>();
   const onLayout = (event: any) => {
     const {width} = event.nativeEvent.layout;
     setBarWidth(width);
+    console.log('@@@ bar width: ', barWidth);
   };
-  const [barWidth, setBarWidth] = useState<number | undefined>();
   const pan = useRef(new Animated.ValueXY()).current;
   const panResponder = useRef(
     PanResponder.create({
