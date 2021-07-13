@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import {Image, Text, View, PanResponder, Animated} from 'react-native';
 import {textStyles} from '../common/styles';
+import {useAppDispatch} from '../store';
 import {styles} from './styles';
-// import {useWindowDimensions} from 'react-native';
+import pointsSlice from '../slices/points';
 
 const star = require('../assets/star.png');
 
@@ -28,10 +29,7 @@ enum PointsToDiscount {
   MAX,
 }
 
-let sliderPoints: number;
-
 const pointsForDiscount = (points: number) => {
-  sliderPoints = points;
   if (points <= 0) {
     return PointsToDiscount.NONE;
   }
@@ -101,28 +99,14 @@ const InactiveDiscountText = ({text}: {text: string}) => (
   <Text style={textStyles.inactiveGreyText}>{text}</Text>
 );
 
-const UpdateSlider = (num: number) => {
-  // console.log('xValue: ', num, typeof num);
-  console.log('@@ slider xValue: ', num);
-  if (sliderPoints === 30) {
-    if (num >= 70) {
-      // console.log('@@@ SWITCH!');
-      return PointsToDiscount.TWENTY_PERCENT;
-    }
-    if (num < 0) {
-      // console.log('@@@ negative value!');
-    }
-  }
-};
-
 export const ProgressBar = ({points}: {points: number}) => {
-  // const {screenWidth} = useWindowDimensions();
   const [barWidth, setBarWidth] = useState<number | undefined>();
+  const barIncrements = barWidth! / 5.2;
   const onLayout = (event: any) => {
     const {width} = event.nativeEvent.layout;
     setBarWidth(width);
-    console.log('@@@ bar width: ', barWidth);
   };
+  const [originalPosition, setOriginalPosition] = useState<number>(0);
   const pan = useRef(new Animated.ValueXY()).current;
   const panResponder = useRef(
     PanResponder.create({
@@ -133,12 +117,45 @@ export const ProgressBar = ({points}: {points: number}) => {
           y: (pan.y as any)._value,
         });
       },
-      onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
+      onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}], {
+        useNativeDriver: false,
+      }),
       onPanResponderRelease: () => {
         pan.flattenOffset();
       },
     }),
   ).current;
+  const UpdateSlider = (num: number) => {
+    console.log('@@ slider xValue: ', num);
+    if (num < barIncrements) {
+      setOriginalPosition(0);
+    }
+    if (num > barIncrements && num < barIncrements * 2) {
+      // updatePoints();
+      setOriginalPosition(1);
+      console.log('********************', originalPosition);
+    }
+    if (num > barIncrements * 2 && num < barIncrements * 3) {
+      setOriginalPosition(2);
+      console.log('********************', originalPosition);
+    }
+    if (num > barIncrements * 3 && num < barIncrements * 4) {
+      setOriginalPosition(3);
+      console.log('********************', originalPosition);
+    }
+    if (num > barIncrements * 4 && num < barIncrements * 5) {
+      setOriginalPosition(4);
+      console.log('********************', originalPosition);
+    }
+  };
+  // const dispatch = useAppDispatch();
+  // const updatePoints = useCallback(() => {
+  //   dispatch(
+  //     pointsSlice.actions.addPoints({
+  //       points: 30,
+  //     }),
+  //   );
+  // }, [dispatch]);
   switch (pointsForDiscount(points)) {
     case PointsToDiscount.HALFWAY_TO_FIFTEEN_PERCENT:
       return (
@@ -531,7 +548,8 @@ export const ProgressBar = ({points}: {points: number}) => {
           <View style={styles.progressBarContainer} onLayout={onLayout}>
             <Animated.View
               style={{transform: [{translateX: pan.x}], zIndex: 999}}
-              onTouchMove={() => UpdateSlider((pan.x as any)._value)}
+              onTouchStart={() => UpdateSlider((pan.x as any)._value)}
+              onTouchEnd={() => UpdateSlider((pan.x as any)._value)}
               {...panResponder.panHandlers}>
               <View style={[styles.starContainer, {left: '-2%'}]}>
                 <Image source={star} style={styles.star} />
